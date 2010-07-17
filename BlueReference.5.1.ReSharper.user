@@ -1,0 +1,231 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer>
+      <setting name="UsedSolutionBuilderID">0</setting>
+    </integer>
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="d:Miscellaneous Files/f:System.IntPtr.cs/l:C!?TEMP?_ReSharper.BlueReference.-954348377?DecompilerCache?metadata?mscorlib-69b6?System.IntPtr.cs" caret="397" fromTop="11" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:Mem.cs" caret="10008" fromTop="111" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:Program.cs" caret="1821" fromTop="70" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="919" fromTop="10" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="6860" fromTop="69" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="6860" fromTop="44" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="6860" fromTop="91" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="6860" fromTop="91" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="6860" fromTop="109" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="6860" fromTop="90" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="6860" fromTop="101" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="6563" fromTop="52" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="6860" fromTop="52" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="7191" fromTop="71" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="1166" fromTop="25" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="550" fromTop="18" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="910" fromTop="29" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="4170" fromTop="81" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:Program.cs" caret="1925" fromTop="76" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:Program.cs" caret="1925" fromTop="74" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:Program.cs" caret="2032" fromTop="79" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:Program.cs" caret="1794" fromTop="69" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="4144" fromTop="69" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="5245" fromTop="90" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="4981" fromTop="84" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="4393" fromTop="82" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="4183" fromTop="43" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="3795" fromTop="55" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="2921" fromTop="42" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="3364" fromTop="49" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="2919" fromTop="45" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="2235" fromTop="41" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="1524" fromTop="24" />
+      <File id="C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB/f:BluePill.cs" caret="4599" fromTop="67" />
+    </RecentEdits>
+  </RecentFiles>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="var" priority="7" />
+      <Item value="public" priority="8" />
+      <Item value="class" priority="2" />
+      <Item value="void" priority="5" />
+      <Item value="int" priority="10" />
+      <Item value="p" priority="9" />
+      <Item value="lenPtr" priority="2" />
+      <Item value="len" priority="1" />
+      <Item value="bytes" priority="1" />
+      <Item value="rtthPtr" priority="2" />
+      <Item value="_info" priority="0" />
+      <Item value="T" priority="1" />
+      <Item value="marker" priority="0" />
+      <Item value="pmarker" priority="2" />
+      <Item value="return" priority="11" />
+      <Item value="poof" priority="0" />
+      <Item value="MarshalByRefObject" priority="0" />
+      <Item value="for" priority="1" />
+      <Item value="i" priority="7" />
+      <Item value="BluePill" priority="10" />
+      <Item value="byte" priority="5" />
+      <Item value="static" priority="5" />
+      <Item value="const" priority="0" />
+      <Item value="magic" priority="4" />
+      <Item value="Console" priority="0" />
+      <Item value="Length" priority="2" />
+      <Item value="rtth" priority="2" />
+      <Item value="RuntimeTypeHandle" priority="0" />
+      <Item value="Type" priority="0" />
+      <Item value="_type" priority="10" />
+      <Item value="if" priority="8" />
+      <Item value="throw" priority="2" />
+      <Item value="ArgumentException" priority="2" />
+      <Item value="unsafe" priority="3" />
+      <Item value="T`0" priority="6" />
+      <Item value="double" priority="1" />
+      <Item value="long" priority="5" />
+      <Item value="DateTime`0" priority="5" />
+      <Item value="t" priority="4" />
+      <Item value="new" priority="7" />
+      <Item value="FooBar`0" priority="3" />
+      <Item value="fooBar" priority="7" />
+      <Item value="a" priority="1" />
+      <Item value="b" priority="0" />
+      <Item value="x" priority="0" />
+      <Item value="GCHandle`0" priority="0" />
+      <Item value="Pinned" priority="0" />
+      <Item value="handle" priority="0" />
+      <Item value="Console`0" priority="1" />
+      <Item value="fooBarPtr" priority="1" />
+      <Item value="ulong" priority="0" />
+      <Item value="o" priority="1" />
+      <Item value="Marshal`0" priority="4" />
+      <Item value="LayoutKind`0" priority="2" />
+      <Item value="StructLayout" priority="0" />
+      <Item value="size" priority="0" />
+      <Item value="BluePill`0" priority="1" />
+      <Item value="IntPtr" priority="0" />
+      <Item value="IntPtr`0" priority="7" />
+      <Item value="PrologueSize" priority="10" />
+      <Item value="_Activator`0" priority="0" />
+      <Item value="CreateUnmanaged`0" priority="0" />
+      <Item value="Object`0" priority="0" />
+      <Item value="ToPointer`0" priority="0" />
+      <Item value="np" priority="0" />
+      <Item value="_size" priority="4" />
+      <Item value="IEnumerable" priority="1" />
+      <Item value="BluePillEnumerator" priority="0" />
+      <Item value="_p" priority="5" />
+      <Item value="_numElements" priority="2" />
+      <Item value="private" priority="3" />
+      <Item value="while" priority="0" />
+      <Item value="numEkenebrts" priority="0" />
+      <Item value="_rtth" priority="1" />
+      <Item value="_origP" priority="2" />
+      <Item value="_end" priority="1" />
+      <Item value="numNumElements" priority="0" />
+      <Item value="default" priority="0" />
+      <Item value="false" priority="0" />
+      <Item value="true" priority="1" />
+      <Item value="numElements" priority="2" />
+      <Item value="FixupRtth`0" priority="0" />
+      <Item value="object" priority="0" />
+      <Item value="Trade`0" priority="0" />
+      <Item value="unamangeTradeArray" priority="1" />
+      <Item value="Math`0" priority="1" />
+      <Item value="Random`0" priority="1" />
+      <Item value="PrintTrade`0" priority="1" />
+      <Item value="Reset`0" priority="0" />
+      <Item value="readonly" priority="0" />
+      <Item value="Type`0" priority="0" />
+      <Item value="_elementType" priority="3" />
+      <Item value="_elementSize" priority="1" />
+      <Item value="foreach" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Type">
+      <Item value="TypeHandle" priority="1" />
+      <Item value="IsArray" priority="3" />
+      <Item value="IsValueType" priority="0" />
+      <Item value="IsPrimitive" priority="1" />
+      <Item value="IsLayoutSequential" priority="0" />
+      <Item value="IsExplicitLayout" priority="0" />
+      <Item value="GetElementType`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.RuntimeTypeHandle">
+      <Item value="Value" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.IntPtr">
+      <Item value="ToInt64" priority="1" />
+      <Item value="ToPointer" priority="0" />
+      <Item value="ToPointer`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Runtime.InteropServices.Marshal">
+      <Item value="AllocHGlobal" priority="0" />
+      <Item value="SizeOf`0" priority="1" />
+      <Item value="AllocHGlobal`0" priority="0" />
+      <Item value="Copy`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@ManagedHell.BluePill`1">
+      <Item value="FromPointer" priority="0" />
+      <Item value="PrologueSize" priority="0" />
+      <Item value="_handle" priority="0" />
+      <Item value="FromPointer`0" priority="1" />
+      <Item value="ToPointer`0" priority="0" />
+      <Item value="CreateUnmanaged`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Console">
+      <Item value="WriteLine" priority="0" />
+      <Item value="WriteLine`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@ManagedHell.BluePill">
+      <Item value="PrologueSize" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.DateTime">
+      <Item value="Now" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Runtime.InteropServices.GCHandle">
+      <Item value="Alloc`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Runtime.InteropServices.GCHandle">
+      <Item value="AddrOfPinnedObject`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Runtime.InteropServices.LayoutKind">
+      <Item value="Sequential" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.IntPtr">
+      <Item value="Size" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ManagedHell.FooBar">
+      <Item value="ZZZ" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ManagedHell.Trade">
+      <Item value="DateTime" priority="2" />
+      <Item value="Price" priority="2" />
+      <Item value="Size" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@ManagedHell.Mem">
+      <Item value="Cpy`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Random">
+      <Item value="NextDouble`0" priority="0" />
+      <Item value="Next`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Math">
+      <Item value="Round`0" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+</Configuration>
