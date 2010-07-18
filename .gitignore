@@ -1,6 +1,6 @@
 ManagedHell/bin
 ManagedHell/obj
-MAnagedHell.Demo/bin
+ManagedHell.Demo/bin
 ManagedHell.Demo/obj
 *.suo
 ManagedHell.*.user

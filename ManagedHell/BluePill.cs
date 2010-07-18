@@ -20,6 +20,13 @@ namespace ManagedHell
     private static readonly int _elementSize;
     private static IAllocator _defaultAllocator;
 
+    [StructLayout(LayoutKind.Explicit)]
+    private struct Poof
+    {
+      [FieldOffset(0)] public T o;
+      [FieldOffset(0)] public unsafe void *p;
+    }
+
     static BluePill()
     {
       _type = typeof(T);
@@ -65,6 +72,11 @@ namespace ManagedHell
       if (_type.IsValueType)
         throw new ArgumentException("Cannot cast a pointer to an object into an array");
 
+      //Poof poof;
+      //poof.p = null;
+      //poof.o = o;
+      //return poof.p;
+
       var x = o;
       IntPtr *marker;
       var pmarker = (&marker) - 1;
@@ -88,7 +100,13 @@ namespace ManagedHell
       IntPtr marker;
 
       var rtthPtr = (IntPtr *) (((byte*)p) - PrologueSize);
-      *rtthPtr = _rtth;
+      if (*rtthPtr != _rtth)
+        *rtthPtr = _rtth;
+
+      //Poof poof;
+      //poof.o = default(T);
+      //poof.p = p;
+      //return poof.o;
 
       var pmarker = (&marker) - 1;
       *pmarker = (IntPtr) rtthPtr;
@@ -114,7 +132,13 @@ namespace ManagedHell
       var lenPtr = (IntPtr*)(((byte*)p) - IntPtr.Size);
       *lenPtr = numElements;
       var rtthPtr = lenPtr - 1;
-      *rtthPtr = _rtth;
+      if (*rtthPtr != _rtth)
+        *rtthPtr = _rtth;
+
+      //Poof poof;
+      //poof.o = default(T);
+      //poof.p = rtthPtr;
+      //return poof.o;
 
       var pmarker = (&marker) - 1;
       *pmarker = (IntPtr)rtthPtr;
@@ -132,8 +156,6 @@ namespace ManagedHell
       p += PrologueArraySize;
       return FromPointer(p, (IntPtr)i);
     }
-
-
 
     public static unsafe void* CreateUnmanagedClassArray(int numElements)
     {
@@ -177,17 +199,19 @@ namespace ManagedHell
       }
   }
 
-    public static unsafe IEnumerable<T> AsEnumerable(void *p, long len)
-    {
-      return new BluePillEnumerable(p, len);
-    }
+    public static unsafe IEnumerable<T> AsEnumerable(void *p, int len)
+    { return new BluePillEnumerable(p, len); }
+
+    public static unsafe IList<T> AsList(void* p, int len)
+    { return new BluePillList(p, len); }
+
 
     public class BluePillEnumerable : IEnumerable<T>
     {
       private readonly unsafe byte* _p;
-      private readonly long _numElements;
+      private readonly int _numElements;
 
-      public unsafe BluePillEnumerable(void* p, long numNumElements)
+      public unsafe BluePillEnumerable(void* p, int numNumElements)
       {
         _p = (byte*) p;
         _numElements = numNumElements;
@@ -200,28 +224,25 @@ namespace ManagedHell
       }
 
       IEnumerator IEnumerable.GetEnumerator()
-      {        
-        return GetEnumerator();
-      }
+      { return GetEnumerator(); }
     }
 
     public class BluePillEnumerator : IEnumerator<T>
     {
       private readonly unsafe byte* _origP;
       private unsafe byte* _p;
-      private readonly long _numElements;
+      private readonly int _numElements;
       private readonly unsafe byte* _end;
 
-      public unsafe BluePillEnumerator(void* p, long numElements)
+      public unsafe BluePillEnumerator(void* p, int numElements)
       {        
         _origP = (byte*) p;
         _numElements = numElements;
-        _end = _origP + _numElements*_size;
+        _end = _origP + (_numElements-1)*_size;
         Reset();
       }
 
-      public void Dispose()
-      { }
+      public void Dispose() { }
 
       public unsafe bool MoveNext()
       {
@@ -233,13 +254,16 @@ namespace ManagedHell
       }
 
       public unsafe void Reset()
-      {
-        _p = _origP - _size;
-      }
+      { _p = _origP - _size; }
 
       public unsafe T Current
       {
-        get { 
+        get {
+          //Poof poof;
+          //poof.o = default(T);
+          //poof.p = _p;
+          //return poof.o;
+
           var poof = default(T);
           IntPtr marker;
 
@@ -253,5 +277,50 @@ namespace ManagedHell
       { get { return Current; } }
     }
 
+    public class BluePillList : IList<T>
+    {
+      private unsafe void* _p;
+      private readonly int _numElements;
+
+      public unsafe BluePillList(void* p, int numElements)
+      {
+        _p = p;
+        _numElements = numElements;
+      }
+
+      public unsafe IEnumerator<T> GetEnumerator()
+      { return new BluePillEnumerator(_p, _numElements); }
+      IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+
+      public void Add(T item) { throw new NotImplementedException(); }
+      public void Clear() { throw new NotImplementedException(); }
+      public bool Remove(T item) { throw new NotImplementedException(); }
+      public void Insert(int index, T item) { throw new NotImplementedException(); }
+      public void RemoveAt(int index) { throw new NotImplementedException(); }
+
+      public bool Contains(T item) { throw new NotImplementedException(); }
+      public void CopyTo(T[] array, int arrayIndex) { throw new NotImplementedException(); }
+
+      public int Count { get { return _numElements; } }
+
+      public bool IsReadOnly { get { return true; } }
+
+      public int IndexOf(T item) { throw new NotImplementedException(); }
+      public unsafe T this[int index] { 
+        get {
+          var poof = default(T);
+          IntPtr marker;
+
+          var pmarker = (&marker) - 1;
+          *pmarker = (IntPtr)_p + (index * _size);
+          return poof;
+
+        } 
+        set { throw new NotImplementedException(); } 
+      }
+    }
+
   }
+
+
 }

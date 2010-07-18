@@ -22,7 +22,7 @@ namespace ManagedHell.MMF
     private Win32MapProtection _protection = Win32MapProtection.PageNone;
     internal static readonly uint ALLOCATION_GRANULARITY;
     internal static readonly uint PAGE_SIZE;
-    private bool _isAnonymous;
+    private readonly bool _isAnonymous;
 
     static Win32MemoryMappedFile()
     {
@@ -36,16 +36,12 @@ namespace ManagedHell.MMF
     { get { return (_mapHandle != Win32Native.NULL_HANDLE); } }
 
     public override uint PageSize
-    {
-      get { return PAGE_SIZE; }
-    }
+    { get { return PAGE_SIZE; } }
 
     public override uint AllocationGranularity
-    {
-      get { return ALLOCATION_GRANULARITY; }
-    }
+    { get { return ALLOCATION_GRANULARITY; } }
 
-    public Win32MemoryMappedFile(string fileName, long maxSize)
+    public Win32MemoryMappedFile(string fileName, long maxSize, MapProtection mapProtection)
       : base(fileName, maxSize)
     {
       // open file first
@@ -80,8 +76,16 @@ namespace ManagedHell.MMF
 
       // determine file access needed
       // we'll always need generic read access
-      var desiredAccess = Win32FileAccess.GenericRead;
-
+      var desiredAccess = Win32FileAccess.None;
+      switch (mapProtection) {
+        case MapProtection.PageRead:
+          desiredAccess = Win32FileAccess.GenericRead;
+          break;
+        case MapProtection.PageReadWrite:
+          desiredAccess = Win32FileAccess.GenericRead | Win32FileAccess.GenericWrite;
+          break;
+      }
+      
       string mapName;
 
       // open or create the file
@@ -103,8 +107,18 @@ namespace ManagedHell.MMF
       // We always create a read-write mapping object
       // the individual map obtained through MapView will be able to restrict
       // the access
+      var win32MapProtection = Win32MapProtection.PageReadOnly;
+      switch (mapProtection) {
+        case MapProtection.PageRead:
+          win32MapProtection = Win32MapProtection.PageReadOnly;
+          break;
+        case MapProtection.PageReadWrite:
+          win32MapProtection = Win32MapProtection.PageReadWrite;
+          break;
+       }
+
       _mapHandle = Win32Native.CreateFileMapping(
-        fileHandle, IntPtr.Zero, (int) Win32MapProtection.PageReadOnly,
+        fileHandle, IntPtr.Zero, (int) win32MapProtection,
         (int) ((maxSize >> 32) & 0xFFFFFFFF),
         (int) (maxSize & 0xFFFFFFFF), mapName);
 

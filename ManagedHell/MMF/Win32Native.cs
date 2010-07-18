@@ -68,7 +68,8 @@ namespace ManagedHell.MMF
     /// <summary>
     /// Generic All Permissions
     /// </summary>
-    GenericAll = 0x10000000
+    GenericAll = 0x10000000,
+    None = 0x0,
   }
 
   [Flags]
