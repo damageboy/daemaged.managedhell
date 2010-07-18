@@ -16,8 +16,9 @@ namespace ManagedHell
     private static readonly Type _type;
     private static readonly Type _elementType;
     private static readonly IntPtr _rtth;
-    private static int _size;
-    private static int _elementSize;
+    private static readonly int _size;
+    private static readonly int _elementSize;
+    private static IAllocator _defaultAllocator;
 
     static BluePill()
     {
@@ -37,6 +38,19 @@ namespace ManagedHell
         throw new ArgumentException("Cannot use BluePill on non primitive types WITHOUT Explicit/Sequential layout");
 
       _size = Marshal.SizeOf(_type) + PrologueSize;
+    }
+
+    public static IAllocator DefaultAllocator
+    {
+      get { return _defaultAllocator; }
+      set
+      {
+        if (_defaultAllocator != null)
+          throw new InvalidOperationException("Allocator cannot be set twice");
+
+        _defaultAllocator = value;
+
+      }
     }
 
     /// <summary>
