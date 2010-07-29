@@ -6,7 +6,8 @@ namespace ManagedHell.MMF
   public enum MapProtection
   {
     PageRead,
-    PageReadWrite
+    PageReadWrite,
+    PageWriteCopy,
   }
 
   public interface IMemoryMappedFile : IDisposable
@@ -70,14 +71,14 @@ namespace ManagedHell.MMF
   {
     private readonly string _fileName;
     protected long _maxSize;
-    protected SortedList<IntPtr, long> _mappings;
+    protected SortedList<ulong, long> _mappings;
 
     protected AbstractMemoryMappedFile(string fileName, long maxSize)
     {
       _fileName = fileName;
       _maxSize = maxSize;
 
-      _mappings = new SortedList<IntPtr, long>(Comparer<IntPtr>.Default);
+      _mappings = new SortedList<ulong, long>(Comparer<ulong>.Default);
     }
 
     public string FileName { get { return _fileName;  } }
@@ -90,10 +91,10 @@ namespace ManagedHell.MMF
 
     protected void UnmapAll()
     {
-      var tmp = new IntPtr[_mappings.Count];
+      ulong[] tmp = new ulong[_mappings.Count];
       _mappings.Keys.CopyTo(tmp, 0);
       foreach (var p in tmp) {
-        UnMapView(p);
+        UnMapView((IntPtr) p);
       }
     }
     /// <summary>

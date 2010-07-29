@@ -52,6 +52,7 @@
     <DefineConstants>TRACE;AMD64;NETFX_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -117,7 +118,16 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ilpatch.patch" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\NETFX 4.0 Tools\ildasm.exe" /nobar /out:ManagedHell.il ManagedHell.dll
+dos2unix ManagedHell.il
+patch -p1 &lt; ../../ilpatch.patch
+"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ilasm.exe"  /quiet /nologo /pdb /dll /optimize /output=ManagedHell.dll ManagedHell.il</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -20,13 +20,6 @@ namespace ManagedHell
     private static readonly int _elementSize;
     private static IAllocator _defaultAllocator;
 
-    [StructLayout(LayoutKind.Explicit)]
-    private struct Poof
-    {
-      [FieldOffset(0)] public T o;
-      [FieldOffset(0)] public unsafe void *p;
-    }
-
     static BluePill()
     {
       _type = typeof(T);
@@ -72,15 +65,10 @@ namespace ManagedHell
       if (_type.IsValueType)
         throw new ArgumentException("Cannot cast a pointer to an object into an array");
 
-      //Poof poof;
-      //poof.p = null;
-      //poof.o = o;
-      //return poof.p;
-
       var x = o;
       IntPtr *marker;
       var pmarker = (&marker) - 1;
-      return (*pmarker) + 1;
+      return *pmarker;
     }
 
     /// <summary>
@@ -99,14 +87,9 @@ namespace ManagedHell
       var poof = default(T);
       IntPtr marker;
 
-      var rtthPtr = (IntPtr *) (((byte*)p) - PrologueSize);
+      var rtthPtr = (IntPtr *) p;
       if (*rtthPtr != _rtth)
         *rtthPtr = _rtth;
-
-      //Poof poof;
-      //poof.o = default(T);
-      //poof.p = p;
-      //return poof.o;
 
       var pmarker = (&marker) - 1;
       *pmarker = (IntPtr) rtthPtr;
@@ -129,16 +112,12 @@ namespace ManagedHell
       var poof = default(T);
       IntPtr marker;
 
-      var lenPtr = (IntPtr*)(((byte*)p) - IntPtr.Size);
+      var lenPtr = ((IntPtr*)p) + 1;
       *lenPtr = numElements;
-      var rtthPtr = lenPtr - 1;
+      var rtthPtr = (IntPtr*) p;
       if (*rtthPtr != _rtth)
         *rtthPtr = _rtth;
 
-      //Poof poof;
-      //poof.o = default(T);
-      //poof.p = rtthPtr;
-      //return poof.o;
 
       var pmarker = (&marker) - 1;
       *pmarker = (IntPtr)rtthPtr;
@@ -152,8 +131,7 @@ namespace ManagedHell
       
       var allocSize = (i * _elementSize) + PrologueArraySize;
       var p = (byte*)Marshal.AllocHGlobal(allocSize).ToPointer();
-
-      p += PrologueArraySize;
+      
       return FromPointer(p, (IntPtr)i);
     }
 
@@ -167,7 +145,6 @@ namespace ManagedHell
     public static unsafe T CreateUnmanaged()
     {
       var p = (byte*)Marshal.AllocHGlobal(_size);
-      p += PrologueSize;
       return FromPointer(p);
     }
 
@@ -180,9 +157,7 @@ namespace ManagedHell
     {
       var p = ToPointer(o);
       var np = (byte*)Marshal.AllocHGlobal(_size);
-      np += PrologueSize;
-      Mem.Cpy((byte*) p, np, _size - PrologueSize);
-
+      Mem.Cpy((byte*) p, np, _size);
       return FromPointer(np);
     }
 
@@ -259,11 +234,6 @@ namespace ManagedHell
       public unsafe T Current
       {
         get {
-          //Poof poof;
-          //poof.o = default(T);
-          //poof.p = _p;
-          //return poof.o;
-
           var poof = default(T);
           IntPtr marker;
 

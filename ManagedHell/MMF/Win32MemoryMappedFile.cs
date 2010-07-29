@@ -115,6 +115,9 @@ namespace ManagedHell.MMF
         case MapProtection.PageReadWrite:
           win32MapProtection = Win32MapProtection.PageReadWrite;
           break;
+        case MapProtection.PageWriteCopy:
+          win32MapProtection = Win32MapProtection.PageWriteCopy;
+          break;
        }
 
       _mapHandle = Win32Native.CreateFileMapping(
@@ -139,19 +142,23 @@ namespace ManagedHell.MMF
 
       var mapSize = new IntPtr(size);
 
-      var access = Win32FileMapAccessType.Unspecified;
+      var win32Access = Win32FileMapAccessType.Unspecified;
 
       switch (protection) {
         case MapProtection.PageRead:
-          access = Win32FileMapAccessType.Read;
+          win32Access = Win32FileMapAccessType.Read;
           break;
         case MapProtection.PageReadWrite:
-          access = Win32FileMapAccessType.Write;
+          win32Access = Win32FileMapAccessType.Write;
           break;
+        case MapProtection.PageWriteCopy:
+          win32Access = Win32FileMapAccessType.Copy;
+          break;
+
       }
 
       var baseAddress = Win32Native.MapViewOfFileEx(
-        _mapHandle, access,
+        _mapHandle, win32Access,
         (uint)((offset >> 32) & 0xFFFFFFFF),
         (uint)(offset & 0xFFFFFFFF), 
         new UIntPtr((ulong) mapSize), desiredAddress);
@@ -159,14 +166,14 @@ namespace ManagedHell.MMF
       if (baseAddress == IntPtr.Zero)
         throw new Win32Exception(Marshal.GetLastWin32Error());
 
-      _mappings.Add(baseAddress, size);
+      _mappings.Add((ulong) baseAddress, size);
 
       return baseAddress;
     }
 
     public override void UnMapView(IntPtr mapBaseAddr)
     {
-      _mappings.Remove(mapBaseAddr);
+      _mappings.Remove((ulong) mapBaseAddr);
       Win32Native.UnmapViewOfFile(mapBaseAddr);      
     }
 
