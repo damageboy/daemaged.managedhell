@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace ManagedHell
+namespace Daemaged.ManagedHell
 {
   public interface IAllocator
   {

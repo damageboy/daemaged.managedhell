@@ -1,7 +1,6 @@
 using System.Runtime.InteropServices;
-using System;
 
-namespace ManagedHell.MMF
+namespace Daemaged.ManagedHell.MMF
 {  
   internal static class PosixNative
   {

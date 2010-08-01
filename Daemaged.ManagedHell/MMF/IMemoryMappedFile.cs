@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ManagedHell.MMF
+namespace Daemaged.ManagedHell.MMF
 {
   public enum MapProtection
   {

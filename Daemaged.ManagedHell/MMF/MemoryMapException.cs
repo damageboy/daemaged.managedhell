@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
 
-namespace ManagedHell.MMF
+namespace Daemaged.ManagedHell.MMF
 {
   public class MemoryMapException : IOException
   {

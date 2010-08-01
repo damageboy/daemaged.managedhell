@@ -1,5 +1,5 @@
---- ilorig/ManagedHell.il	2010-07-28 16:55:32.892148400 +0300
-+++ il/ManagedHell.il	2010-07-28 16:52:46.779761300 +0300
+--- ilorig/Daemaged.ManagedHell.il	2010-07-28 16:55:32.892148400 +0300
++++ il/Daemaged.ManagedHell.il	2010-07-28 16:52:46.779761300 +0300
 @@ -4053,21 +4053,11 @@
      {
        // Code size       38 (0x26)
@@ -17,7 +17,7 @@
 -      IL_0012:  stloc.2
 -      IL_0013:  ldloc.2
        IL_0014:  ldarg.0
-       IL_0015:  ldfld      uint8* class ManagedHell.BluePill`1/BluePillEnumerator<!T>::_p
+       IL_0015:  ldfld      uint8* class Daemaged.ManagedHell.BluePill`1/BluePillEnumerator<!T>::_p
 -      IL_001a:  call       native int [mscorlib]System.IntPtr::op_Explicit(void*)
 -      IL_001f:  stobj      [mscorlib]System.IntPtr
 +      IL_001f:  stobj      uint8*
@@ -41,10 +41,10 @@
 -      IL_0012:  stloc.2
 -      IL_0013:  ldloc.2
        IL_0014:  ldarg.0
-       IL_0015:  ldfld      void* class ManagedHell.BluePill`1/BluePillList<!T>::_p
+       IL_0015:  ldfld      void* class Daemaged.ManagedHell.BluePill`1/BluePillList<!T>::_p
 -      IL_001a:  call       native int [mscorlib]System.IntPtr::op_Explicit(void*)
        IL_001f:  ldarg.1
-       IL_0020:  ldsfld     int32 class ManagedHell.BluePill`1<!T>::_size
+       IL_0020:  ldsfld     int32 class Daemaged.ManagedHell.BluePill`1<!T>::_size
        IL_0025:  mul
 -      IL_0026:  call       native int [mscorlib]System.IntPtr::op_Addition(native int,
 -                                                                           int32)
@@ -56,7 +56,7 @@
      } // end of method BluePillList::get_Item
 @@ -4400,19 +4379,13 @@
               [1] native int** pmarker)
-     IL_0000:  ldsfld     class [mscorlib]System.Type class ManagedHell.BluePill`1<!T>::_type
+     IL_0000:  ldsfld     class [mscorlib]System.Type class Daemaged.ManagedHell.BluePill`1<!T>::_type
      IL_0005:  callvirt   instance bool [mscorlib]System.Type::get_IsValueType()
 -    IL_000a:  brfalse.s  IL_0017
 +    IL_000a:  brfalse.s  IL_0023
@@ -86,7 +86,7 @@
 -             [2] native int* rtthPtr,
 -             [3] native int* pmarker)
 +    .locals init ([0] !T poof)
-     IL_0000:  ldsfld     class [mscorlib]System.Type class ManagedHell.BluePill`1<!T>::_type
+     IL_0000:  ldsfld     class [mscorlib]System.Type class Daemaged.ManagedHell.BluePill`1<!T>::_type
      IL_0005:  callvirt   instance bool [mscorlib]System.Type::get_IsArray()
 -    IL_000a:  brfalse.s  IL_0017
 +    IL_000a:  brfalse.s  IL_001f
@@ -102,7 +102,7 @@
 -    IL_0021:  ldloc.2
 -    IL_0022:  ldobj      [mscorlib]System.IntPtr
 +    IL_0022:  ldobj      native int
-     IL_0027:  ldsfld     native int class ManagedHell.BluePill`1<!T>::_rtth
+     IL_0027:  ldsfld     native int class Daemaged.ManagedHell.BluePill`1<!T>::_rtth
 -    IL_002c:  call       bool [mscorlib]System.IntPtr::op_Inequality(native int,
 -                                                                     native int)
 -    IL_0031:  brfalse.s  IL_003e
@@ -110,7 +110,7 @@
  
 -    IL_0033:  ldloc.2
 +    IL_0033:  ldarg.0
-     IL_0034:  ldsfld     native int class ManagedHell.BluePill`1<!T>::_rtth
+     IL_0034:  ldsfld     native int class Daemaged.ManagedHell.BluePill`1<!T>::_rtth
 -    IL_0039:  stobj      [mscorlib]System.IntPtr
 -    IL_003e:  ldloca.s   marker
 -    IL_0040:  conv.u
@@ -130,7 +130,7 @@
    } // end of method BluePill`1::FromPointer
 @@ -4471,42 +4429,28 @@
               [4] native int* pmarker)
-     IL_0000:  ldsfld     class [mscorlib]System.Type class ManagedHell.BluePill`1<!T>::_type
+     IL_0000:  ldsfld     class [mscorlib]System.Type class Daemaged.ManagedHell.BluePill`1<!T>::_type
      IL_0005:  callvirt   instance bool [mscorlib]System.Type::get_IsArray()
 -    IL_000a:  brtrue.s   IL_0017
 +    IL_000a:  brtrue.s   IL_001f
@@ -155,7 +155,7 @@
 -    IL_0031:  ldloc.3
 -    IL_0032:  ldobj      [mscorlib]System.IntPtr
 +    IL_0032:  ldobj      native int
-     IL_0037:  ldsfld     native int class ManagedHell.BluePill`1<!T>::_rtth
+     IL_0037:  ldsfld     native int class Daemaged.ManagedHell.BluePill`1<!T>::_rtth
 -    IL_003c:  call       bool [mscorlib]System.IntPtr::op_Inequality(native int,
 -                                                                     native int)
 -    IL_0041:  brfalse.s  IL_004e
@@ -163,7 +163,7 @@
  
 -    IL_0043:  ldloc.3
 +    IL_0043:  ldarg.0
-     IL_0044:  ldsfld     native int class ManagedHell.BluePill`1<!T>::_rtth
+     IL_0044:  ldsfld     native int class Daemaged.ManagedHell.BluePill`1<!T>::_rtth
 -    IL_0049:  stobj      [mscorlib]System.IntPtr
 -    IL_004e:  ldloca.s   marker
 -    IL_0050:  conv.u

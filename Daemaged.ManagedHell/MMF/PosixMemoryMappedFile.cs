@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using Mono.Unix.Native;
 
-namespace ManagedHell.MMF
+namespace Daemaged.ManagedHell.MMF
 {
   public class PosixMemoryMappedFile : AbstractMemoryMappedFile
   {

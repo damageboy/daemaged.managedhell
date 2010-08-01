@@ -8,8 +8,8 @@
     <ProjectGuid>{C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ManagedHell</RootNamespace>
-    <AssemblyName>ManagedHell</AssemblyName>
+    <RootNamespace>Daemaged.ManagedHell</RootNamespace>
+    <AssemblyName>Daemaged.ManagedHell</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -123,10 +123,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\NETFX 4.0 Tools\ildasm.exe" /nobar /out:ManagedHell.il ManagedHell.dll
-dos2unix ManagedHell.il
-patch -p1 &lt; ../../ilpatch.patch
-"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ilasm.exe"  /quiet /nologo /pdb /dll /optimize /output=ManagedHell.dll ManagedHell.il</PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\NETFX 4.0 Tools\ildasm.exe" /nobar /out:Daemaged.ManagedHell.il Daemaged.ManagedHell.dll
+dos2unix Daemaged.ManagedHell.il
+patch -p1 -F 200000&lt; ../../ilpatch.patch
+"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ilasm.exe"  /quiet /nologo /pdb /dll /optimize /output=Daemaged.ManagedHell.dll Daemaged.ManagedHell.il</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

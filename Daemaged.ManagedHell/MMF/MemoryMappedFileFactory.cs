@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ManagedHell.MMF
+namespace Daemaged.ManagedHell.MMF
 {
   public static class MemoryMappedFileFactory
   {

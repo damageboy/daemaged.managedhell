@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedHell", "ManagedHell\ManagedHell.csproj", "{C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daemaged.ManagedHell", "Daemaged.ManagedHell\Daemaged.ManagedHell.csproj", "{C857DE21-EFDD-4ACD-A18B-DB9B6E61E9AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedHell.Demo", "ManagedHell.Demo\ManagedHell.Demo.csproj", "{D437CFC2-D3AE-4222-B06B-AC7019C292AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daemaged.ManagedHell.Demo", "Daemaged.ManagedHell.Demo\Daemaged.ManagedHell.Demo.csproj", "{D437CFC2-D3AE-4222-B06B-AC7019C292AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

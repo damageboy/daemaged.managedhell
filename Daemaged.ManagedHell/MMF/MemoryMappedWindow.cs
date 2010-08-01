@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace ManagedHell.MMF
+namespace Daemaged.ManagedHell.MMF
 {
   /// <summary>
   /// Provide with a partial window into a memory mapped file

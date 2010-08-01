@@ -10,9 +10,8 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
-using ManagedHell.MMF;
 
-namespace ManagedHell.MMF
+namespace Daemaged.ManagedHell.MMF
 {
   /// <summary>Wrapper class around the Win32 memory mapping APIs</summary>
   public class Win32MemoryMappedFile : AbstractMemoryMappedFile

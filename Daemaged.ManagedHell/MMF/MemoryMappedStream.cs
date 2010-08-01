@@ -2,9 +2,8 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using ManagedHell.MMF;
 
-namespace ManagedHell.MMF
+namespace Daemaged.ManagedHell.MMF
 {
   /// <summary>
   ///   Allows you to read/write from/to

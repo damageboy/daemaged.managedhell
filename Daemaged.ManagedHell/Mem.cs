@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace ManagedHell
+namespace Daemaged.ManagedHell
 {
   public class Mem
   {

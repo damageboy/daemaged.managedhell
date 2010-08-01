@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace ManagedHell.MMF
+namespace Daemaged.ManagedHell.MMF
 {
   [StructLayout(LayoutKind.Sequential)]
   public struct SYSTEM_INFO

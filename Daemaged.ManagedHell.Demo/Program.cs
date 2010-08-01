@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using ManagedHell.MMF;
+using Daemaged.ManagedHell.MMF;
 
-namespace ManagedHell.Demo
+namespace Daemaged.ManagedHell.Demo
 {
   // Dummy Class to test
   [StructLayout(LayoutKind.Sequential)]
@@ -39,8 +39,6 @@ namespace ManagedHell.Demo
     public double Price { get; set; }
     public int Size { get; set; }
   }
-
-
 
   public class StupidMemMapAllocator : IAllocator
   {
