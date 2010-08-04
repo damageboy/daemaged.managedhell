@@ -4,3 +4,8 @@ ManagedHell.Demo/bin
 ManagedHell.Demo/obj
 *.suo
 ManagedHell.*.user
+Daemaged.ManagedHell.Demo/bin/
+Daemaged.ManagedHell.Demo/obj/
+Daemaged.ManagedHell/bin/
+Daemaged.ManagedHell/obj/
+*.user

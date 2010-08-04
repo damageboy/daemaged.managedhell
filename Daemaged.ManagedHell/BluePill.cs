@@ -20,6 +20,133 @@ namespace Daemaged.ManagedHell
     private static readonly int _elementSize;
     private static IAllocator _defaultAllocator;
 
+    public class BluePillEnumerable : IEnumerable<T>
+    {
+      private readonly unsafe byte* _p;
+      private readonly int _numElements;
+
+      public unsafe BluePillEnumerable(void* p, int numNumElements)
+      {
+        _p = (byte*)p;
+        _numElements = numNumElements;
+      }
+
+      public unsafe IEnumerator<T> GetEnumerator()
+      {
+        FixupRtthArray(_p, _numElements);
+        return new BluePillEnumerator(_p, _numElements);
+      }
+
+      IEnumerator IEnumerable.GetEnumerator()
+      { return GetEnumerator(); }
+    }
+
+    public class BluePillEnumerator : IEnumerator<T>
+    {
+      private readonly unsafe byte* _origP;
+      private unsafe byte* _p;
+      private readonly int _numElements;
+      private readonly unsafe byte* _end;
+
+      public unsafe BluePillEnumerator(void* p, int numElements)
+      {
+        _origP = (byte*)p;
+        _numElements = numElements;
+        _end = _origP + (_numElements - 1) * _size;
+        Reset();
+      }
+
+      public void Dispose() { }
+
+      public unsafe bool MoveNext()
+      {
+        if (_p == _end)
+          return false;
+
+        _p += _size;
+        return true;
+      }
+
+      public unsafe void Reset()
+      { _p = _origP - _size; }
+
+      public unsafe T Current
+      {
+        get
+        {
+          T poof;
+#if IL
+          ldloca 0
+          ldarg.0
+          ldfld      uint8* class Daemaged.ManagedHell.BluePill`1/BluePillEnumerator<!T>::_p
+          stobj      uint8*
+          ldloc.0
+          ret
+#endif
+          // Doesn't really matter, the inline IL will replace this at any rate...
+          return default(T);
+        }
+      }
+
+      object IEnumerator.Current
+      { get { return Current; } }
+    }
+
+    public class BluePillList : IList<T>
+    {
+      private unsafe void* _p;
+      private readonly int _numElements;
+
+      public unsafe BluePillList(void* p, int numElements)
+      {
+        _p = p;
+        _numElements = numElements;
+      }
+
+      public unsafe IEnumerator<T> GetEnumerator()
+      { return new BluePillEnumerator(_p, _numElements); }
+      IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+
+      public void Add(T item) { throw new NotImplementedException(); }
+      public void Clear() { throw new NotImplementedException(); }
+      public bool Remove(T item) { throw new NotImplementedException(); }
+      public void Insert(int index, T item) { throw new NotImplementedException(); }
+      public void RemoveAt(int index) { throw new NotImplementedException(); }
+
+      public bool Contains(T item) { throw new NotImplementedException(); }
+      public void CopyTo(T[] array, int arrayIndex) { throw new NotImplementedException(); }
+
+      public int Count { get { return _numElements; } }
+
+      public bool IsReadOnly { get { return true; } }
+
+      public int IndexOf(T item) { throw new NotImplementedException(); }
+      public unsafe T this[int index]
+      {
+        get
+        {
+          T poof;
+#if IL          
+          ldloca 0
+          ldarg.0
+          ldfld      void* class Daemaged.ManagedHell.BluePill`1/BluePillList<!T>::_p
+          ldarg.1
+          ldsfld     int32 class Daemaged.ManagedHell.BluePill`1<!T>::_size
+          mul
+          add
+          stobj      uint8*
+          ldloc.0
+          ret
+#endif
+          // Doesn't really matter, the inline IL will replace this at any rate...
+          return default(T);
+        }
+        set { throw new NotImplementedException(); }
+      }
+    }
+
+
+
     static BluePill()
     {
       _type = typeof(T);
@@ -39,6 +166,7 @@ namespace Daemaged.ManagedHell
 
       _size = Marshal.SizeOf(_type) + PrologueSize;
     }
+
 
     public static IAllocator DefaultAllocator
     {
@@ -62,13 +190,15 @@ namespace Daemaged.ManagedHell
     /// <returns>An unsafe pointer to the objects memory</returns>
     public static unsafe void* ToPointer(T o)
     {
-      if (_type.IsValueType)
-        throw new ArgumentException("Cannot cast a pointer to an object into an array");
+      //if (_type.IsValueType)
+      //  throw new ArgumentException("Cannot cast a pointer to an object into an array");
 
-      var x = o;
-      IntPtr *marker;
-      var pmarker = (&marker) - 1;
-      return *pmarker;
+#if IL    
+      ldarga.s 0
+      ret
+#endif
+
+      return null;
     }
 
     /// <summary>
@@ -81,19 +211,27 @@ namespace Daemaged.ManagedHell
     /// <returns>A managed reference to T</returns>
     public static unsafe T FromPointer(void* p)
     {
-      if (_type.IsArray)
-        throw new ArgumentException("Cannot cast a pointer to an object into an array");
-
-      var poof = default(T);
-      IntPtr marker;
-
-      var rtthPtr = (IntPtr *) p;
-      if (*rtthPtr != _rtth)
-        *rtthPtr = _rtth;
-
-      var pmarker = (&marker) - 1;
-      *pmarker = (IntPtr) rtthPtr;
-      return poof;
+      //if (_type.IsArray)
+      //  throw new ArgumentException("Cannot cast a pointer to an object into an array");
+      T poof;
+#if IL
+      ldarg.0
+    
+      ldobj      native int
+      ldsfld     native int class Daemaged.ManagedHell.BluePill`1<!T>::_rtth
+      beq.s  SkipRtth
+    
+      ldarg.0
+      ldsfld     native int class Daemaged.ManagedHell.BluePill`1<!T>::_rtth
+      stobj      native int
+      SkipRtth:
+      ldloca.s   0
+      ldarg.0
+      stobj      void *
+      ldloc.0
+      ret
+#endif
+      return default(T);
     }
     
     /// <summary>
@@ -106,22 +244,33 @@ namespace Daemaged.ManagedHell
     /// <returns>The Primitive Array</returns>
     public static unsafe T FromPointer(void* p, IntPtr numElements)
     {
-      if (!_type.IsArray)
-        throw new ArgumentException("Cannot cast a pointer to an array into an object");
+      //if (!_type.IsArray)
+      //  throw new ArgumentException("Cannot cast a pointer to an array into an object");
 
-      var poof = default(T);
-      IntPtr marker;
+      T poof;
+#if IL
+      ldarg.0
+      sizeof     native int
+      add
+      ldarg.1
+      stobj      native int
+      ldarg.0
+      ldobj      native int
+      ldsfld     native int class Daemaged.ManagedHell.BluePill`1<!T>::_rtth
+      beq.s  SkipRtth
+      
+      ldarg.0
+      ldsfld     native int class Daemaged.ManagedHell.BluePill`1<!T>::_rtth      
+      stobj      native int
+      SkipRtth:
+      ldloca.s   0
+      ldarg.0
+      stobj      void *
+      ldloc.0
+      ret
+#endif
+      return default(T);
 
-      var lenPtr = ((IntPtr*)p) + 1;
-      *lenPtr = numElements;
-      var rtthPtr = (IntPtr*) p;
-      if (*rtthPtr != _rtth)
-        *rtthPtr = _rtth;
-
-
-      var pmarker = (&marker) - 1;
-      *pmarker = (IntPtr)rtthPtr;
-      return poof;
     }
 
     public static unsafe T CreateUnmanagedPrimitiveArray(int i)
@@ -179,117 +328,6 @@ namespace Daemaged.ManagedHell
 
     public static unsafe IList<T> AsList(void* p, int len)
     { return new BluePillList(p, len); }
-
-
-    public class BluePillEnumerable : IEnumerable<T>
-    {
-      private readonly unsafe byte* _p;
-      private readonly int _numElements;
-
-      public unsafe BluePillEnumerable(void* p, int numNumElements)
-      {
-        _p = (byte*) p;
-        _numElements = numNumElements;
-      }
-
-      public unsafe IEnumerator<T> GetEnumerator()
-      {
-        FixupRtthArray(_p, _numElements);
-        return new BluePillEnumerator(_p, _numElements);
-      }
-
-      IEnumerator IEnumerable.GetEnumerator()
-      { return GetEnumerator(); }
-    }
-
-    public class BluePillEnumerator : IEnumerator<T>
-    {
-      private readonly unsafe byte* _origP;
-      private unsafe byte* _p;
-      private readonly int _numElements;
-      private readonly unsafe byte* _end;
-
-      public unsafe BluePillEnumerator(void* p, int numElements)
-      {        
-        _origP = (byte*) p;
-        _numElements = numElements;
-        _end = _origP + (_numElements-1)*_size;
-        Reset();
-      }
-
-      public void Dispose() { }
-
-      public unsafe bool MoveNext()
-      {
-        if (_p == _end)
-          return false;
-
-        _p += _size;
-        return true;
-      }
-
-      public unsafe void Reset()
-      { _p = _origP - _size; }
-
-      public unsafe T Current
-      {
-        get {
-          var poof = default(T);
-          IntPtr marker;
-
-          var pmarker = (&marker) - 1;
-          *pmarker = (IntPtr) _p;
-          return poof;
-        }
-      }
-
-      object IEnumerator.Current
-      { get { return Current; } }
-    }
-
-    public class BluePillList : IList<T>
-    {
-      private unsafe void* _p;
-      private readonly int _numElements;
-
-      public unsafe BluePillList(void* p, int numElements)
-      {
-        _p = p;
-        _numElements = numElements;
-      }
-
-      public unsafe IEnumerator<T> GetEnumerator()
-      { return new BluePillEnumerator(_p, _numElements); }
-      IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
-
-      public void Add(T item) { throw new NotImplementedException(); }
-      public void Clear() { throw new NotImplementedException(); }
-      public bool Remove(T item) { throw new NotImplementedException(); }
-      public void Insert(int index, T item) { throw new NotImplementedException(); }
-      public void RemoveAt(int index) { throw new NotImplementedException(); }
-
-      public bool Contains(T item) { throw new NotImplementedException(); }
-      public void CopyTo(T[] array, int arrayIndex) { throw new NotImplementedException(); }
-
-      public int Count { get { return _numElements; } }
-
-      public bool IsReadOnly { get { return true; } }
-
-      public int IndexOf(T item) { throw new NotImplementedException(); }
-      public unsafe T this[int index] { 
-        get {
-          var poof = default(T);
-          IntPtr marker;
-
-          var pmarker = (&marker) - 1;
-          *pmarker = (IntPtr)_p + (index * _size);
-          return poof;
-
-        } 
-        set { throw new NotImplementedException(); } 
-      }
-    }
-
   }
 
 

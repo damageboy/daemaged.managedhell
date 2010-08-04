@@ -46,13 +46,14 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;AMD64;NETFX_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -118,15 +119,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ilpatch.patch" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\NETFX 4.0 Tools\ildasm.exe" /nobar /out:Daemaged.ManagedHell.il Daemaged.ManagedHell.dll
-dos2unix Daemaged.ManagedHell.il
-patch -p1 -F 200000&lt; ../../ilpatch.patch
-"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ilasm.exe"  /quiet /nologo /pdb /dll /optimize /output=Daemaged.ManagedHell.dll Daemaged.ManagedHell.il</PostBuildEvent>
+    <PostBuildEvent>$(ProjectDir)/../tools/Daemaged.InlineIL.exe -i $(TargetPath) -o $(TargetPath) -dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
