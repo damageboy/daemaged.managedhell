@@ -91,7 +91,7 @@ namespace Daemaged.ManagedHell.MMF
       // if it doesn't exist, it gets created
       if (!_isAnonymous) {
         fileHandle = Win32Native.CreateFile(
-          fileName, (uint)desiredAccess, (uint) (Wind32FileShare.Read),
+          fileName, (uint)desiredAccess, (uint)(Wind32FileShare.Write | Wind32FileShare.Read),
           IntPtr.Zero, (uint) Win32CreationDisposition.OpenAlways, 0, IntPtr.Zero);
 
 
