@@ -145,8 +145,6 @@ namespace Daemaged.ManagedHell
       }
     }
 
-
-
     static BluePill()
     {
       _type = typeof(T);
@@ -309,6 +307,36 @@ namespace Daemaged.ManagedHell
       Mem.Cpy((byte*) p, np, _size);
       return FromPointer(np);
     }
+
+    /// <summary>
+    /// Copy a
+    /// </summary>
+    /// <param name="o"></param>
+    /// <returns></returns>
+    public static unsafe void CopyTo(T o, void *dest)
+    {
+      var p = ToPointer(o);
+      Mem.Cpy((byte*)p, (byte*) dest, _size);
+    }
+
+    /// <summary>
+    /// Copy a
+    /// </summary>
+    /// <param name="o"></param>
+    /// <returns></returns>
+    public static unsafe void CopyTo(IEnumerable<T> oa, int numElements, void* dest)
+    {
+      var n = 0;
+      var d = (byte*) dest;
+      foreach (var t in oa) {
+        if (n++ < numElements)
+          return;
+        Mem.Cpy((byte*) ToPointer(t), d, _size);
+        d += _size;
+      }
+    }
+
+
 
     private static unsafe void FixupRtthArray(byte *p, long numElements)
     {      
