@@ -83,6 +83,7 @@
     <Compile Include="IAllocator.cs" />
     <Compile Include="Mem.cs" />
     <Compile Include="MMF\IMemoryMappedFile.cs" />
+    <Compile Include="IReadOnlyList.cs" />
     <Compile Include="MMF\MemoryMapException.cs" />
     <Compile Include="MMF\MemoryMappedFileFactory.cs" />
     <Compile Include="MMF\MemoryMappedStream.cs" />

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Daemaged.ManagedHell.MMF;
 
 namespace Daemaged.ManagedHell
 {
@@ -9,6 +10,12 @@ namespace Daemaged.ManagedHell
   {
     public static readonly int PrologueSize = IntPtr.Size;
     public static readonly int PrologueArraySize = PrologueSize * 2;
+
+    public static unsafe void Free(void* p)
+    {
+      Marshal.FreeHGlobal(new IntPtr(p));
+    }
+
   }
 
   public class BluePill<T> : BluePill
@@ -69,6 +76,7 @@ namespace Daemaged.ManagedHell
 
       public unsafe void Reset()
       { _p = _origP - _size; }
+      
 
       public unsafe T Current
       {
@@ -92,7 +100,7 @@ namespace Daemaged.ManagedHell
       { get { return Current; } }
     }
 
-    public class BluePillList : IList<T>
+    public class BluePillList : IList<T>, IReadOnlyList<T>
     {
       private unsafe void* _p;
       private readonly int _numElements;
@@ -165,6 +173,7 @@ namespace Daemaged.ManagedHell
       _size = Marshal.SizeOf(_type) + PrologueSize;
     }
 
+    public int SizeOf { get { return _size; } }
 
     public static IAllocator DefaultAllocator
     {
@@ -282,12 +291,31 @@ namespace Daemaged.ManagedHell
       return FromPointer(p, (IntPtr)i);
     }
 
+    public static  int GetUnmanagedClassArraySize(int numElements) { return _size*numElements; }
+
+    public static unsafe void* CreateUnmanagedClassArray(byte[] bytes, int numElements)
+    {
+      var gch = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+      var p = (byte *) gch.AddrOfPinnedObject();
+      p = (byte*) CreateUnmanagedClassArray(p, numElements);
+      gch.Free();
+      return p;
+    }
+
+
     public static unsafe void* CreateUnmanagedClassArray(int numElements)
     {
-      var p = (byte*)Marshal.AllocHGlobal(_size * numElements);
+      var p = (byte*)Marshal.AllocHGlobal(GetUnmanagedClassArraySize(numElements));
+      return CreateUnmanagedClassArray(p, numElements);      
+    }
+
+
+    public static unsafe void* CreateUnmanagedClassArray(byte* p, int numElements)
+    {
       FixupRtthArray(p, numElements);
       return p;
     }
+
 
     public static unsafe T CreateUnmanaged()
     {
@@ -324,19 +352,30 @@ namespace Daemaged.ManagedHell
     /// </summary>
     /// <param name="o"></param>
     /// <returns></returns>
-    public static unsafe void CopyTo(IEnumerable<T> oa, int numElements, void* dest)
+    public static unsafe void CopyTo(IEnumerable<T> src, int numElements, void* dest)
     {
       var n = 0;
       var d = (byte*) dest;
-      foreach (var t in oa) {
-        if (n++ < numElements)
+      foreach (var t in src) {
+        if (n++ > numElements)
           return;
         Mem.Cpy((byte*) ToPointer(t), d, _size);
         d += _size;
       }
     }
 
-
+    /// <summary>
+    /// Copy a
+    /// </summary>
+    /// <param name="o"></param>
+    /// <returns></returns>
+    public static unsafe void CopyTo(IEnumerable<T> src, int numElements, byte[] bytes)
+    {
+      var gch = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+      var p = (byte*)gch.AddrOfPinnedObject();
+      CopyTo(src, numElements, p);
+      gch.Free();
+    }
 
     private static unsafe void FixupRtthArray(byte *p, long numElements)
     {      
@@ -356,6 +395,11 @@ namespace Daemaged.ManagedHell
 
     public static unsafe IList<T> AsList(void* p, int len)
     { return new BluePillList(p, len); }
+
+    public static unsafe IReadOnlyList<T> AsReadonlyList(void* p, int len)
+    { return new BluePillList(p, len); }
+
+
   }
 
 
