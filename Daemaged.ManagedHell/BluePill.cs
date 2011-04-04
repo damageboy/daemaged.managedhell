@@ -200,8 +200,15 @@ namespace Daemaged.ManagedHell
       //if (_type.IsValueType)
       //  throw new ArgumentException("Cannot cast a pointer to an object into an array");
 
+#if USE_CSHARP
+      var x = o;
+      IntPtr* marker;
+      var pmarker = (&marker) - 1;
+      return *pmarker;
+#endif
+
 #if IL    
-      ldarga.s 0
+      ldarg.0
       ret
 #endif
 

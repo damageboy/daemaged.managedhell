@@ -131,7 +131,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(ProjectDir)/../tools/Daemaged.InlineIL.exe -i $(TargetPath) -o $(TargetPath) -k $(ProjectDir)Daemanged.ManagedHell.snk -dll</PostBuildEvent>
+    <PostBuildEvent>$(ProjectDir)/../tools/Daemaged.InlineIL.exe --verbose -i $(TargetPath) -o $(TargetPath) -k $(ProjectDir)Daemanged.ManagedHell.snk -dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

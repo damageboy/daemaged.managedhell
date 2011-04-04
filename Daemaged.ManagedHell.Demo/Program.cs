@@ -82,6 +82,10 @@ namespace Daemaged.ManagedHell.Demo
       PrintTrade(fooBar);
       PrintTrade(fooBarNative);
 
+      Console.WriteLine("Roundtrip pointer:");
+      Trade roundTrip = BluePill<Trade>.FromPointer(BluePill<Trade>.ToPointer(fooBar));
+      PrintTrade(roundTrip);
+
       Console.WriteLine("Same, but with automatic properties");
       var fooBar2 = new Trade2 { DateTime = DateTime.Now, Price = 1435.25, Size = 100 };
       var fooBarNative2 = BluePill<Trade2>.CreateUnmanaged();
