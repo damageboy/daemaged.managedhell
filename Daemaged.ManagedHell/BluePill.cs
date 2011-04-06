@@ -82,13 +82,9 @@ namespace Daemaged.ManagedHell
       {
         get
         {
-          T poof;
 #if IL
-          ldloca 0
           ldarg.0
           ldfld      uint8* class Daemaged.ManagedHell.BluePill`1/BluePillEnumerator<!T>::_p
-          stobj      uint8*
-          ldloc.0
           ret
 #endif
           // Doesn't really matter, the inline IL will replace this at any rate...
@@ -133,17 +129,14 @@ namespace Daemaged.ManagedHell
       {
         get
         {
-          T poof;
 #if IL          
-          ldloca 0
           ldarg.0
           ldfld      void* class Daemaged.ManagedHell.BluePill`1/BluePillList<!T>::_p
           ldarg.1
           ldsfld     int32 class Daemaged.ManagedHell.BluePill`1<!T>::_size
           mul
           add
-          stobj      uint8*
-          ldloc.0
+
           ret
 #endif
           // Doesn't really matter, the inline IL will replace this at any rate...
@@ -195,7 +188,7 @@ namespace Daemaged.ManagedHell
     /// method to use on native .NET object, use this only on referenced obtained through BluePill</remarks>
     /// <param name="o"> The reference</param>
     /// <returns>An unsafe pointer to the objects memory</returns>
-    public static unsafe void* ToPointer(T o)
+    public static unsafe void* ToPointerUnstable(T o)
     {
       //if (_type.IsValueType)
       //  throw new ArgumentException("Cannot cast a pointer to an object into an array");
@@ -337,7 +330,7 @@ namespace Daemaged.ManagedHell
     /// <returns></returns>
     public static unsafe T CopyUnmanaged(T o)
     {
-      var p = ToPointer(o);
+      var p = ToPointerUnstable(o);
       var np = (byte*)Marshal.AllocHGlobal(_size);
       Mem.Cpy((byte*) p, np, _size);
       return FromPointer(np);
@@ -350,7 +343,7 @@ namespace Daemaged.ManagedHell
     /// <returns></returns>
     public static unsafe void CopyTo(T o, void *dest)
     {
-      var p = ToPointer(o);
+      var p = ToPointerUnstable(o);
       Mem.Cpy((byte*)p, (byte*) dest, _size);
     }
 
@@ -366,7 +359,7 @@ namespace Daemaged.ManagedHell
       foreach (var t in src) {
         if (n++ > numElements)
           return;
-        Mem.Cpy((byte*) ToPointer(t), d, _size);
+        Mem.Cpy((byte*) ToPointerUnstable(t), d, _size);
         d += _size;
       }
     }
