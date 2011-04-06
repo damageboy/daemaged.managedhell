@@ -83,7 +83,7 @@ namespace Daemaged.ManagedHell.Demo
       PrintTrade(fooBarNative);
 
       Console.WriteLine("Roundtrip pointer:");
-      Trade roundTrip = BluePill<Trade>.FromPointer(BluePill<Trade>.ToPointer(fooBar));
+      Trade roundTrip = BluePill<Trade>.FromPointer(BluePill<Trade>.ToPointerUnstable(fooBar));
       PrintTrade(roundTrip);
 
       Console.WriteLine("Same, but with automatic properties");
