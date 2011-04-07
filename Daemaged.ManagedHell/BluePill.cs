@@ -29,8 +29,8 @@ namespace Daemaged.ManagedHell
 
     public class BluePillEnumerable : IEnumerable<T>
     {
-      private readonly unsafe byte* _p;
-      private readonly int _numElements;
+      protected readonly unsafe byte* _p;
+      protected readonly int _numElements;
 
       public unsafe BluePillEnumerable(void* p, int numNumElements)
       {
@@ -96,20 +96,15 @@ namespace Daemaged.ManagedHell
       { get { return Current; } }
     }
 
-    public class BluePillList : IList<T>, IReadOnlyList<T>
+    public class BluePillList : BluePillEnumerable, IList<T>, IReadOnlyList<T>
     {
-      private unsafe void* _p;
-      private readonly int _numElements;
+      public unsafe BluePillList(void* p, int numElements) : base(p, numElements)
+      { }
 
-      public unsafe BluePillList(void* p, int numElements)
+      public unsafe void FooBar()
       {
-        _p = p;
-        _numElements = numElements;
+        Console.WriteLine((long) _p);
       }
-
-      public unsafe IEnumerator<T> GetEnumerator()
-      { return new BluePillEnumerator(_p, _numElements); }
-      IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
 
       public void Add(T item) { throw new NotImplementedException(); }
       public void Clear() { throw new NotImplementedException(); }
@@ -131,12 +126,11 @@ namespace Daemaged.ManagedHell
         {
 #if IL          
           ldarg.0
-          ldfld      void* class Daemaged.ManagedHell.BluePill`1/BluePillList<!T>::_p
+          ldfld      uint8* class Daemaged.ManagedHell.BluePill`1/BluePillEnumerable<!T>::_p
           ldarg.1
           ldsfld     int32 class Daemaged.ManagedHell.BluePill`1<!T>::_size
           mul
           add
-
           ret
 #endif
           // Doesn't really matter, the inline IL will replace this at any rate...
