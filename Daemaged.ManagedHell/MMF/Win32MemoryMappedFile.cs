@@ -85,22 +85,25 @@ namespace Daemaged.ManagedHell.MMF
           break;
       }
       
-      string mapName;
+      //string mapName;
 
       // open or create the file
       // if it doesn't exist, it gets created
-      if (!_isAnonymous) {
+      if (!_isAnonymous)
+      {
         fileHandle = Win32Native.CreateFile(
           fileName, (uint)desiredAccess, (uint)(Wind32FileShare.Write | Wind32FileShare.Read),
-          IntPtr.Zero, (uint) Win32CreationDisposition.OpenAlways, 0, IntPtr.Zero);
+          IntPtr.Zero, (uint)Win32CreationDisposition.OpenAlways, 0, IntPtr.Zero);
 
 
         if (fileHandle == Win32Native.INVALID_HANDLE_VALUE)
           throw new Win32Exception(Marshal.GetLastWin32Error());
 
-        mapName = backingFileInfo.Name;
+        //mapName = backingFileInfo.Name;
       }
-      else mapName = "Anonymous";
+      else
+        ;
+        //mapName = "Anonymous";
 
 
       // We always create a read-write mapping object
@@ -122,7 +125,7 @@ namespace Daemaged.ManagedHell.MMF
       _mapHandle = Win32Native.CreateFileMapping(
         fileHandle, IntPtr.Zero, (int) win32MapProtection,
         (int) ((maxSize >> 32) & 0xFFFFFFFF),
-        (int) (maxSize & 0xFFFFFFFF), mapName);
+        (int) (maxSize & 0xFFFFFFFF), null);
 
       // close file handle, we don't need it
       if (fileHandle != Win32Native.INVALID_HANDLE_VALUE) 
