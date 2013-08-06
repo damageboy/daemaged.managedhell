@@ -148,17 +148,14 @@ namespace Daemaged.ManagedHell.Demo
 
         foreach (var t in BluePill<Trade>.AsEnumerable((void*)p, 1024))
           PrintTrade(t);        
-      }
-
-
-      Console.ReadLine();
-
+      }    
     }
 
     private static void TestBluePillWithGC(Trade t)
     {
       Console.WriteLine("{0}: {1}/{2}", t.DateTime, t.Price, t.Size);
       GC.Collect();
+      Console.WriteLine("{0}: {1}/{2}", t.DateTime, t.Price, t.Size);
       Console.WriteLine("Survived GC");
     }
 
