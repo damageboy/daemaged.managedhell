@@ -82,6 +82,9 @@ namespace Daemaged.ManagedHell.Demo
       PrintTrade(fooBar);
       PrintTrade(fooBarNative);
 
+      TestBluePillWithGC(fooBarNative);
+
+
       Console.WriteLine("Roundtrip pointer:");
       Trade roundTrip = BluePill<Trade>.FromPointer(BluePill<Trade>.ToPointerUnstable(fooBar));
       PrintTrade(roundTrip);
@@ -150,6 +153,13 @@ namespace Daemaged.ManagedHell.Demo
 
       Console.ReadLine();
 
+    }
+
+    private static void TestBluePillWithGC(Trade t)
+    {
+      Console.WriteLine("{0}: {1}/{2}", t.DateTime, t.Price, t.Size);
+      GC.Collect();
+      Console.WriteLine("Survived GC");
     }
 
     private static void PrintTrade(Trade2 t)
